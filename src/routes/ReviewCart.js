@@ -1,9 +1,10 @@
 import React from "react";
+import styled from 'styled-components'
 
 export default function ReviewCart() {
     return (
         <div>
-            Review Your Cart Yo
+
         </div>
     );
 }
