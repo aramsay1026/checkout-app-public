@@ -1,8 +1,8 @@
 import React from "react";
 import styled from 'styled-components';
-import CheckOut from './routes/CheckOut.js';
-import OrderComplete from './routes/OrderComplete.js';
-import ReviewCart from './routes/ReviewCart.js';
+import CheckOut from './routes/CheckOut';
+import OrderComplete from './routes/OrderComplete';
+import ReviewCart from './routes/ReviewCart';
 
 import {
   BrowserRouter as Router,
@@ -42,8 +42,8 @@ export default function App() {
     <Router>
       <div>
         <NavBar>
-          <Link to="/">Review Cart
-          <NavTitle>Assemble Store</NavTitle>
+          <Link to="/">
+            <NavTitle>Assemble Store</NavTitle>
           </Link>
           <Link to="/check-out"> <CheckOutIcon></CheckOutIcon></Link>
         </NavBar>
