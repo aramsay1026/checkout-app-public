@@ -35,6 +35,11 @@ const ProductQuantityText = styled.span`
     top: -0.4em;
 `;
 
+const CartLabelText = styled.span`
+    padding: 0 1em;
+    color: gray;
+`;
+
 type ChangeProductCountType = (item: Item, newCount: number) => void;
 type ProductQuantityProps = {
     item: Item,
@@ -65,16 +70,17 @@ function productItem(props: Item, changeProductCount: ChangeProductCountType) {
     return (
         <tr>
             <td><ProductPicture {...props} /></td>
-            <td><ProductQuantity item={props} changeProductCount={changeProductCount} /></td>
-            <td>${props.unitPrice}</td>
             <td>{props.name}</td>
             <td>{props.sku}</td>
+            <td><ProductQuantity item={props} changeProductCount={changeProductCount} /></td>
+            <td>${props.unitPrice}</td>
+
         </tr>
     )
 }
 
 export default function ReviewCart() {
-    // const item = props.Item;
+
     return (
         <CartContext.Consumer>
             {(cartContextValue: any) => {
@@ -96,8 +102,8 @@ export default function ReviewCart() {
                     <table>
                         <tr>
                             <th>Your Cart</th>
-                            <th>QUANTITY</th>
-                            <th>PRICE</th>
+                            <th><CartLabelText>QUANTITY</CartLabelText></th>
+                            <th><CartLabelText>PRICE</CartLabelText></th>
                         </tr>
                         {cart.map((item: Item) => productItem(item, changeProductCount))}
                     </table>
