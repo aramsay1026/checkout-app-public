@@ -4,6 +4,7 @@ import CheckOut from './routes/CheckOut';
 import OrderComplete from './routes/OrderComplete';
 import ReviewCart from './routes/ReviewCart';
 import CartContext, { defaultCart } from './CartContext';
+import ShippingAndBillingContext, { defaultShippingAndBilling } from './ShippingAndBillingContext';
 
 import {
   BrowserRouter as Router,
@@ -40,38 +41,46 @@ const CheckOutIcon = styled.i`
 
 export default function App() {
   const [cart, setCart] = useState(defaultCart);
+  const [shippingAndBilling, setShippingAndBilling] = useState(defaultShippingAndBilling);
 
   const cartContextValue = {
     cart,
     setCart
   };
 
-  return (
-    <CartContext.Provider value={cartContextValue}>
-      <Router>
-        <div>
-          <NavBar>
-            <Link to="/">
-              <NavTitle>Assemble Store</NavTitle>
-            </Link>
-            <Link to="/check-out"> <CheckOutIcon></CheckOutIcon></Link>
-          </NavBar>
+  const shippingAndBillingContextValue = {
+    shippingAndBilling,
+    setShippingAndBilling
+  };
 
-          {/* A <Switch> looks through its children <Route>s and
+  return (
+    <ShippingAndBillingContext.Provider value={shippingAndBillingContextValue}>
+      <CartContext.Provider value={cartContextValue}>
+        <Router>
+          <div>
+            <NavBar>
+              <Link to="/">
+                <NavTitle>Assemble Store</NavTitle>
+              </Link>
+              <Link to="/"> <CheckOutIcon></CheckOutIcon></Link>
+            </NavBar>
+
+            {/* A <Switch> looks through its children <Route>s and
               renders the first one that matches the current URL. */}
-          <Switch>
-            <Route path="/check-out">
-              <CheckOut />
-            </Route>
-            <Route path="/order-complete">
-              <OrderComplete />
-            </Route>
-            <Route path="/">
-              <ReviewCart />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
-    </CartContext.Provider>
+            <Switch>
+              <Route path="/check-out">
+                <CheckOut />
+              </Route>
+              <Route path="/order-complete">
+                <OrderComplete />
+              </Route>
+              <Route path="/">
+                <ReviewCart />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+      </CartContext.Provider>
+    </ShippingAndBillingContext.Provider>
   );
 }

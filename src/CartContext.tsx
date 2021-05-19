@@ -20,7 +20,10 @@ const defaultCart: CartType = [
     { sku: 38094321, unitPrice: 12.0, name: "Blue socks", quantity: 4 }
 ];
 
-const CartContext = React.createContext(defaultCart);
+const CartContext = React.createContext({
+    cart: defaultCart,
+    setCart: (cart: CartType) => { }
+});
 
 export default CartContext;
 export type { Item, CartType, SetCartType, CartContextType };

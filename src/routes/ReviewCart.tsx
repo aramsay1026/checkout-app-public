@@ -2,6 +2,12 @@ import React from "react";
 import styled from 'styled-components'
 import CartContext from '../CartContext';
 import type { Item } from '../CartContext';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
 
 const ProductPicture = styled.span`
     height: 183px;
@@ -40,6 +46,10 @@ const CartLabelText = styled.span`
     color: gray;
 `;
 
+const CheckoutButton = styled.button`
+    color: gray;
+`;
+
 type ChangeProductCountType = (item: Item, newCount: number) => void;
 type ProductQuantityProps = {
     item: Item,
@@ -74,13 +84,11 @@ function productItem(props: Item, changeProductCount: ChangeProductCountType) {
             <td>{props.sku}</td>
             <td><ProductQuantity item={props} changeProductCount={changeProductCount} /></td>
             <td>${props.unitPrice}</td>
-
         </tr>
     )
 }
 
 export default function ReviewCart() {
-
     return (
         <CartContext.Consumer>
             {(cartContextValue: any) => {
@@ -99,14 +107,19 @@ export default function ReviewCart() {
                 };
 
                 return (
-                    <table>
-                        <tr>
-                            <th>Your Cart</th>
-                            <th><CartLabelText>QUANTITY</CartLabelText></th>
-                            <th><CartLabelText>PRICE</CartLabelText></th>
-                        </tr>
-                        {cart.map((item: Item) => productItem(item, changeProductCount))}
-                    </table>
+                    <div>
+                        <table>
+                            <tr>
+                                <th>Your Cart</th>
+                                <th><CartLabelText>QUANTITY</CartLabelText></th>
+                                <th><CartLabelText>PRICE</CartLabelText></th>
+                            </tr>
+                            {cart.map((item: Item) => productItem(item, changeProductCount))}
+                        </table>
+                        <Link to="/check-out">
+                            <CheckoutButton> Proceed To Checkout</CheckoutButton>
+                        </Link>
+                    </div>
                 );
             }}
         </CartContext.Consumer>
