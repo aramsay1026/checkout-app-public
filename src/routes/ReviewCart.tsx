@@ -1,13 +1,15 @@
 import React from "react";
-import styled from 'styled-components'
+import styled from 'styled-components';
 import CartContext from '../CartContext';
 import type { Item } from '../CartContext';
+import { Button, PageContainer, AlignRight, Table, TableRow, TableCell, CellContents, TextLabelBold } from '../AppStyle';
 import {
     BrowserRouter as Router,
     Switch,
     Route,
     Link
 } from "react-router-dom";
+import { TextLabelGray } from "../AppStyle";
 
 const ProductPicture = styled.span`
     height: 183px;
@@ -39,72 +41,6 @@ const ProductQuantityText = styled.span`
     padding: 0 0.5em;
     position: relative;
     top: -0.4em;
-`;
-
-const CartLabelText = styled.span`
-    padding: 0 1em;
-    color: gray;
-`;
-
-const YourCartText = styled.span`
-    position: relative;
-    top: -0.3em;
-    font-weight: bold;
-    font-size: 1.5em;
-`;
-
-const CheckoutButton = styled.button`
-    border: none;
-    color: gray;
-    border-radius: 25px;
-    font-family: 'SF Pro Text';
-    padding: .8em;
-    font-size: 1.2em;
-`;
-
-const AlignRight = styled.div`
-    width: 100%;
-    text-align: right;
-`;
-
-const PageContainer = styled.div`
-    font-family: 'SF Pro Text';
-    margin: 3em auto;
-    border-radius: 65px;
-    background-color: #fafafa;
-    width: 960px;
-    padding: 35px 54px;
-`;
-
-const Table = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin: 0 0 3em 0;
-    padding: 0;
-`;
-
-const TableRow = styled.div`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-`;
-
-const TableCell = styled.div`
-    text-align: center;
-    box-sizing: border-box;
-    flex-grow: 1;
-    width: 25%;  // Default to full width
-    padding: 0.8em 1.2em;
-    overflow: hidden; // Or flex might break
-    list-style: none;
-    border: solid @bw white;
-    background: fade(slategrey,20%);
-    > h1, > h2, > h3, > h4, > h5, > h6 { margin: 0; }
-`;
-
-const CellContents = styled.div`
-    margin: 35% auto 0;
-    text-align: center;
 `;
 
 const SkuContainer = styled.div`
@@ -171,16 +107,16 @@ export default function ReviewCart() {
                     <PageContainer>
                         <Table>
                             <TableRow>
-                                <TableCell><YourCartText>Your Cart</YourCartText></TableCell>
-                                <TableCell><CartLabelText>ITEM</CartLabelText></TableCell>
-                                <TableCell><CartLabelText>QUANTITY</CartLabelText></TableCell>
-                                <TableCell><CartLabelText>PRICE</CartLabelText></TableCell>
+                                <TableCell><TextLabelBold>Your Cart</TextLabelBold></TableCell>
+                                <TableCell><TextLabelGray> ITEM</TextLabelGray></TableCell>
+                                <TableCell><TextLabelGray> QUANTITY</TextLabelGray></TableCell>
+                                <TableCell><TextLabelGray> PRICE</TextLabelGray></TableCell>
                             </TableRow>
                             {cart.map((item: Item) => productItem(item, changeProductCount))}
                         </Table>
                         <AlignRight>
                             <Link to="/check-out">
-                                <CheckoutButton> Proceed To Checkout</CheckoutButton>
+                                <Button> Proceed To Checkout</Button>
                             </Link>
                         </AlignRight>
                     </PageContainer>

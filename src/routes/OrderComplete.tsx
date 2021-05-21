@@ -1,10 +1,15 @@
 import React from "react";
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { Button, PageContainer, TextLabelBold, AlignCenter } from '../AppStyle';
 
 export default function OrderComplete() {
     return (
-        <div>
-            Order OrderComplete
-        </div>
+        <PageContainer>
+            <AlignCenter>
+                <TextLabelBold>
+                    Thank you for your order!
+            </TextLabelBold>
+            </AlignCenter>
+        </PageContainer>
     );
 }

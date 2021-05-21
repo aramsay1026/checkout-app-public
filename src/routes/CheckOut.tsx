@@ -12,14 +12,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
-
-const OrderFormContainer = styled.div`
-    height: 100%;
-    width: 50%;
-    display: flex;
-    align-items: center;
-    background: linear-gradient(to bottom, #f3f3f3, #e6e6e6);
-`;
+import { Button, PageContainer, AlignRight, Table, TableRow, TableCell, HeavyText, LightText } from '../AppStyle';
 
 const MarginBuffer = styled.div`
     margin: 10px;
@@ -42,36 +35,26 @@ const Checkbox = styled.div`
     border: 1px solid #686868
 `;
 
-const HeavyText = styled.h1`
-    font-family: 'SF Pro Text';
-    font-weight: 900;
-    color: #686868;
-`;
-
-const LightText = styled.h5`
-    font-family: 'SF Pro Text';
-    font-weight: 300;
-    color: #686868;
-    margin: 0
-`;
-
 const ContentMargin = styled.div`
     margin-bottom: 50px;
 `;
 
-
 const FormField = styled.input`
     display: inline-block;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    padding: 0.5em;
 `;
 
-const PlaceOrderButton = styled.button`
-    color: gray;
+const LinkText = styled.div`
+    position: relative;
+    bottom: 2em;
 `;
 
 // const formData = checkMark ? shippingData : billingData
 
 export default function CheckOut() {
-
     return (
         <ShippingAndBillingContext.Consumer>
             {(shippingAndBillingContextValue: any) => {
@@ -95,111 +78,95 @@ export default function CheckOut() {
                     }
                 }
 
-                const changeShippingAddressFieldFactory = changeNestedAddressFieldFactoryFactory('shippingAddress');
-                const changeBillingAddressFieldFactory = changeNestedAddressFieldFactoryFactory('billingAddress');
+                function renderAddressFields(addressType: ShippingAndBillingFieldType) {
+                    const changeAddressFieldFactory = changeNestedAddressFieldFactoryFactory(addressType);
+                    const getAddressFieldFactory = getNestedAddressFieldValueFactoryFactory(addressType);
 
-                const getShippingAddressFieldFactory = getNestedAddressFieldValueFactoryFactory('shippingAddress');
-                const getBillingAddressFieldFactory = getNestedAddressFieldValueFactoryFactory('billingAddress');
-
-                return (
-                    <OrderFormContainer>
-                        <MarginBuffer>
-                            <HeavyText>Shipping Address</HeavyText>
-                            <InputContainer>
-                                <ContentMargin>
+                    return (
+                        <Table>
+                            <TableRow>
+                                <TableCell>
                                     <FormField
                                         type="text"
                                         placeholder="Name"
-                                        value={getShippingAddressFieldFactory('name')}
-                                        onChange={changeShippingAddressFieldFactory('name')}
+                                        value={getAddressFieldFactory('name')}
+                                        onChange={changeAddressFieldFactory('name')}
                                     />
+                                </TableCell>
+                                <TableCell>
                                     <FormField
                                         type="text"
                                         placeholder="Street Address"
-                                        value={getShippingAddressFieldFactory('address1')}
-                                        onChange={changeShippingAddressFieldFactory('address1')}
+                                        value={getAddressFieldFactory('address1')}
+                                        onChange={changeAddressFieldFactory('address1')}
                                     />
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>
                                     <FormField
                                         type="text"
                                         placeholder="Address 2"
-                                        value={getShippingAddressFieldFactory('address2')}
-                                        onChange={changeShippingAddressFieldFactory('address2')}
+                                        value={getAddressFieldFactory('address2')}
+                                        onChange={changeAddressFieldFactory('address2')}
                                     />
+                                </TableCell>
+                                <TableCell>
                                     <FormField
                                         type="text"
                                         placeholder="City"
-                                        value={getShippingAddressFieldFactory('city')}
-                                        onChange={changeShippingAddressFieldFactory('city')}
+                                        value={getAddressFieldFactory('city')}
+                                        onChange={changeAddressFieldFactory('city')}
                                     />
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>
                                     <FormField
                                         type="text"
                                         placeholder="State"
-                                        value={getShippingAddressFieldFactory('state')}
-                                        onChange={changeShippingAddressFieldFactory('state')}
+                                        value={getAddressFieldFactory('state')}
+                                        onChange={changeAddressFieldFactory('state')}
                                     />
+                                </TableCell>
+                                <TableCell>
                                     <FormField
                                         type="text"
                                         placeholder="Country"
-                                        value={getShippingAddressFieldFactory('country')}
-                                        onChange={changeShippingAddressFieldFactory('country')}
+                                        value={getAddressFieldFactory('country')}
+                                        onChange={changeAddressFieldFactory('country')}
                                     />
-                                </ContentMargin>
-                            </InputContainer>
+                                </TableCell>
+                            </TableRow>
+                        </Table>
+                    );
+                }
+
+                return (
+                    <PageContainer>
+                        <MarginBuffer>
+                            <HeavyText>Shipping Address</HeavyText>
+                            {renderAddressFields('shippingAddress')}
                             <FlexVerticalFlex>
                                 // makeshift checkbox, needs logic
                                     <Checkbox>
                                 </Checkbox>
                                 <LightText>Same as billing?</LightText>
                             </FlexVerticalFlex>
-                            <LightText>Billing Address</LightText>
-                            <InputContainer>
-                                <ContentMargin>
-                                    <FormField
-                                        type="text"
-                                        placeholder="Name"
-                                        value={getShippingAddressFieldFactory('name')}
-                                        onChange={changeShippingAddressFieldFactory('name')}
-                                    />
-                                    <FormField
-                                        type="text"
-                                        placeholder="Street Address"
-                                        value={getShippingAddressFieldFactory('address1')}
-                                        onChange={changeShippingAddressFieldFactory('address1')}
-                                    />
-                                    <FormField
-                                        type="text"
-                                        placeholder="Address 2"
-                                        value={getShippingAddressFieldFactory('address2')}
-                                        onChange={changeShippingAddressFieldFactory('address2')}
-                                    />
-                                    <FormField
-                                        type="text"
-                                        placeholder="City"
-                                        value={getShippingAddressFieldFactory('city')}
-                                        onChange={changeShippingAddressFieldFactory('city')}
-                                    />
-                                    <FormField
-                                        type="text"
-                                        placeholder="State"
-                                        value={getShippingAddressFieldFactory('state')}
-                                        onChange={changeShippingAddressFieldFactory('state')}
-                                    />
-                                    <FormField
-                                        type="text"
-                                        placeholder="Country"
-                                        value={getShippingAddressFieldFactory('country')}
-                                        onChange={changeShippingAddressFieldFactory('country')}
-                                    />
-                                </ContentMargin>
-                            </InputContainer>
+                            <HeavyText>Billing Address</HeavyText>
+                            {renderAddressFields('billingAddress')}
                             <Link to="/order-complete">
-                                <PlaceOrderButton> Place Order</PlaceOrderButton>
+                                <Button> Place Order</Button>
                             </Link>
-                            <Link to="/">
-                                Return to Cart
-                            </Link>
+                            <AlignRight>
+                                <LinkText>
+                                    <Link to="/">
+                                        Return to Cart
+                                    </Link>
+                                </LinkText>
+                            </AlignRight>
                         </MarginBuffer>
-                    </OrderFormContainer>
+                    </PageContainer >
                 );
             }}
         </ShippingAndBillingContext.Consumer >
