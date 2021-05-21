@@ -46,8 +46,69 @@ const CartLabelText = styled.span`
     color: gray;
 `;
 
+const YourCartText = styled.span`
+    position: relative;
+    top: -0.3em;
+    font-weight: bold;
+    font-size: 1.5em;
+`;
+
 const CheckoutButton = styled.button`
+    border: none;
     color: gray;
+    border-radius: 25px;
+    font-family: 'SF Pro Text';
+    padding: .8em;
+    font-size: 1.2em;
+`;
+
+const AlignRight = styled.div`
+    width: 100%;
+    text-align: right;
+`;
+
+const PageContainer = styled.div`
+    font-family: 'SF Pro Text';
+    margin: 3em auto;
+    border-radius: 65px;
+    background-color: #fafafa;
+    width: 960px;
+    padding: 35px 54px;
+`;
+
+const Table = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 3em 0;
+    padding: 0;
+`;
+
+const TableRow = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+`;
+
+const TableCell = styled.div`
+    text-align: center;
+    box-sizing: border-box;
+    flex-grow: 1;
+    width: 25%;  // Default to full width
+    padding: 0.8em 1.2em;
+    overflow: hidden; // Or flex might break
+    list-style: none;
+    border: solid @bw white;
+    background: fade(slategrey,20%);
+    > h1, > h2, > h3, > h4, > h5, > h6 { margin: 0; }
+`;
+
+const CellContents = styled.div`
+    margin: 35% auto 0;
+    text-align: center;
+`;
+
+const SkuContainer = styled.div`
+    text-align: center;
 `;
 
 type ChangeProductCountType = (item: Item, newCount: number) => void;
@@ -78,18 +139,18 @@ function ProductQuantity(props: ProductQuantityProps) {
 
 function productItem(props: Item, changeProductCount: ChangeProductCountType) {
     return (
-        <tr>
-            <td><ProductPicture {...props} /></td>
-            <td>{props.name}</td>
-            <td>{props.sku}</td>
-            <td><ProductQuantity item={props} changeProductCount={changeProductCount} /></td>
-            <td>${props.unitPrice}</td>
-        </tr>
+        <TableRow>
+            <TableCell><ProductPicture {...props} /></TableCell>
+            <TableCell><CellContents>{props.name} <SkuContainer>Sku:{props.sku}</SkuContainer></CellContents></TableCell>
+            <TableCell><CellContents><ProductQuantity item={props} changeProductCount={changeProductCount} /></CellContents></TableCell>
+            <TableCell><CellContents>${props.unitPrice}</CellContents></TableCell>
+        </TableRow>
     )
 }
 
 export default function ReviewCart() {
     return (
+
         <CartContext.Consumer>
             {(cartContextValue: any) => {
                 const { cart, setCart } = cartContextValue;
@@ -107,21 +168,26 @@ export default function ReviewCart() {
                 };
 
                 return (
-                    <div>
-                        <table>
-                            <tr>
-                                <th>Your Cart</th>
-                                <th><CartLabelText>QUANTITY</CartLabelText></th>
-                                <th><CartLabelText>PRICE</CartLabelText></th>
-                            </tr>
+                    <PageContainer>
+                        <Table>
+                            <TableRow>
+                                <TableCell><YourCartText>Your Cart</YourCartText></TableCell>
+                                <TableCell><CartLabelText>ITEM</CartLabelText></TableCell>
+                                <TableCell><CartLabelText>QUANTITY</CartLabelText></TableCell>
+                                <TableCell><CartLabelText>PRICE</CartLabelText></TableCell>
+                            </TableRow>
                             {cart.map((item: Item) => productItem(item, changeProductCount))}
-                        </table>
-                        <Link to="/check-out">
-                            <CheckoutButton> Proceed To Checkout</CheckoutButton>
-                        </Link>
-                    </div>
+                        </Table>
+                        <AlignRight>
+                            <Link to="/check-out">
+                                <CheckoutButton> Proceed To Checkout</CheckoutButton>
+                            </Link>
+                        </AlignRight>
+                    </PageContainer>
+
                 );
             }}
         </CartContext.Consumer>
+
     );
 }

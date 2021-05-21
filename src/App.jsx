@@ -23,10 +23,17 @@ const NavBar = styled.nav`
 const NavTitle = styled.span`
   color: white;
   font-family: Arial, Helvetic, sans-serif;
-  font-size: 1em;
   position: relative;
   top: 1em;
   left: 3em;
+  text-decoration: none;
+  height: 40vmin;
+  pointer-events: none;
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
 `;
 
 const CheckOutIcon = styled.i`
