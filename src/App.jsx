@@ -30,15 +30,36 @@ const NavTitle = styled.span`
   pointer-events: none;
 `;
 
+const CheckoutButtonContainer = styled.div`
+  display: inline-block;
+  position: absolute;
+  top: .75em;
+  right: 5em;
+`;
+
 const CheckOutIcon = styled.i`
   display: inline-block;
   background-image: url("cart.svg");
   width: 25px;
   height: 23px;
-  position: absolute;
-  top: .75em;
-  right: 5em;
 `;
+
+const CartTotalText = styled.span`
+  background-color: white;
+  border-radius: 50%;
+  display: inline-block;
+  padding: 0 0.4em;
+`;
+
+function cartButton(cart) {
+  const totalItems = cart.reduce(function (acc, item) {
+    return acc + item.quantity;
+  }, 0);
+
+  return (
+    <CheckoutButtonContainer><CheckOutIcon></CheckOutIcon><CartTotalText>{totalItems}</CartTotalText></CheckoutButtonContainer>
+  )
+}
 
 export default function App() {
   const [cart, setCart] = useState(defaultCart);
@@ -63,7 +84,7 @@ export default function App() {
               <Link style={{ 'text-decoration': 'none' }} to="/">
                 <NavTitle>Assemble Store</NavTitle>
               </Link>
-              <Link to="/"> <CheckOutIcon></CheckOutIcon></Link>
+              <Link to="/">{cartButton(cart)}</Link>
             </NavBar>
             <Switch>
               <Route path="/check-out">
