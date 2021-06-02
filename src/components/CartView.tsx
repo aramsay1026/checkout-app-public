@@ -52,7 +52,6 @@ type ProductQuantityProps = {
     item: Item,
     changeProductCount: ChangeProductCountType
 };
-
 function ProductQuantity(props: ProductQuantityProps) {
     function onDecrement() {
         const { item } = props;
@@ -70,10 +69,24 @@ function ProductQuantity(props: ProductQuantityProps) {
             <ProductQuantityText>{props.item.quantity}</ProductQuantityText>
             <PlusIcon onClick={onIncrement}></PlusIcon>
         </span>
+
     )
 }
 
-// TODO: adjust price according to quantity changes
+type ProductPriceProps = {
+    item: Item
+};
+
+function ProductPrice(props: ProductPriceProps) {
+    const { item } = props;
+
+    return (
+        <span>
+            <ProductQuantityText>Price: ${item.unitPrice}</ProductQuantityText>
+            <ProductQuantityText>Total: ${item.unitPrice * item.quantity}</ProductQuantityText>
+        </span>
+    );
+}
 
 function productItem(props: Item, changeProductCount: ChangeProductCountType) {
     return (
@@ -81,14 +94,13 @@ function productItem(props: Item, changeProductCount: ChangeProductCountType) {
             <TableCell><ProductPicture {...props} /></TableCell>
             <TableCell><CellContents>{props.name} <SkuContainer>Sku:{props.sku}</SkuContainer></CellContents></TableCell>
             <TableCell><CellContents><ProductQuantity item={props} changeProductCount={changeProductCount} /></CellContents></TableCell>
-            <TableCell><CellContents>${props.unitPrice}</CellContents></TableCell>
+            <TableCell><CellContents><ProductPrice item={props} /></CellContents></TableCell>
         </TableRow>
     )
 }
 
 export default function ReviewCart() {
     return (
-
         <CartContext.Consumer>
             {(cartContextValue: any) => {
                 const { cart, setCart } = cartContextValue;

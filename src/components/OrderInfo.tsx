@@ -60,8 +60,8 @@ const LinkText = styled.div`
 
 const ADDRESS_TYPE_PLACEHOLDER: AddressType = {
     name: 'Name',
-    address1: 'Street Address',
-    address2: 'Street Address (Second Line)',
+    address1: 'Address',
+    address2: 'Address (Second Line)',
     city: 'City',
     state: 'State',
     zip: 'ZIP Code',
@@ -137,8 +137,7 @@ export default function OrderInfo() {
                             <HeavyText>Shipping Address</HeavyText>
                             {renderAddressFields('shippingAddress')}
                             <FlexVerticalFlex>
-                                // makeshift checkbox, needs logic
-                                    <Checkbox>
+                                <Checkbox>
                                 </Checkbox>
                                 <LightText>Same as billing?</LightText>
                             </FlexVerticalFlex>
