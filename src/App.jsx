@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import CheckOut from './routes/CheckOut';
 import OrderComplete from './routes/OrderComplete';
 import ReviewCart from './routes/ReviewCart';
-import CartContext, { defaultCart } from './CartContext';
-import ShippingAndBillingContext, { defaultShippingAndBilling } from './ShippingAndBillingContext';
+import CartContext, { defaultCart } from './providers/CartContext';
+import ShippingAndBillingContext, { defaultShippingAndBilling } from './providers/ShippingAndBillingContext';
 
 import {
   BrowserRouter as Router,

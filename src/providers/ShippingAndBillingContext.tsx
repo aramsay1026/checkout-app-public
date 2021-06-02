@@ -12,7 +12,7 @@ type ShippingAndBillingContextType = {
     setShippingAndBilling: SetShippingAndBillingType,
 };
 
-const defaultAddress = {
+const defaultAddress: AddressType = {
     name: '',
     address1: '',
     address2: '',
@@ -21,6 +21,8 @@ const defaultAddress = {
     zip: '',
     country: '',
 };
+
+const ADDRESS_FIELD_TYPES = Object.keys(defaultAddress) as AddressFieldType[];
 
 function copyAddress(address: AddressType): AddressType {
     return Object.assign({}, address);
@@ -42,4 +44,4 @@ const ShippingAndBillingContext = React.createContext({
 
 export default ShippingAndBillingContext;
 export type { AddressFieldType, AddressType, ShippingAndBillingFieldType, ShippingAndBillingType, SetShippingAndBillingType, ShippingAndBillingContextType };
-export { defaultShippingAndBilling, copyAddress, copyShippingAndBilling };
+export { ADDRESS_FIELD_TYPES, defaultShippingAndBilling, copyAddress, copyShippingAndBilling };
