@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from 'styled-components';
 import CartContext from '../providers/CartContext';
 import type { Item } from '../providers/CartContext';
 import { Button, PageContainer, AlignRight, Table, TableRow, TableCell, CellContents, TextLabelBold } from '../styles/AppStyle';
+import Modal from '../components/Modal';
 import {
     BrowserRouter as Router,
     Switch,
@@ -16,6 +17,22 @@ const ProductPicture = styled.span`
     width: 183px;
     display: inline-block;
     background-image: url('${(props: Item) => props.sku + '.png'}');
+`;
+
+const ProductModalPicture = styled.span`
+    display: inline-block;
+    height: 600px;
+    width: 600px;
+    margin: 0 180px;
+    background-image: url('${(props: Item) => props.sku + '.png'}');
+    background-repeat: no-repeat;
+    background-size: cover;
+`;
+
+const ProductModalPictureContainer = styled.div`
+    display: block;
+    position: relative;
+    width: 100%;
 `;
 
 const PlusIcon = styled.span`
@@ -48,6 +65,7 @@ const SkuContainer = styled.div`
 `;
 
 type ChangeProductCountType = (item: Item, newCount: number) => void;
+type SelectImageType = (item: Item) => void;
 type ProductQuantityProps = {
     item: Item,
     changeProductCount: ChangeProductCountType
@@ -88,10 +106,14 @@ function ProductPrice(props: ProductPriceProps) {
     );
 }
 
-function productItem(props: Item, changeProductCount: ChangeProductCountType) {
+function productItem(props: Item, changeProductCount: ChangeProductCountType, onSelectImage: SelectImageType) {
+    const onClickImage = () => {
+        onSelectImage(props);
+    };
+
     return (
         <TableRow>
-            <TableCell><ProductPicture {...props} /></TableCell>
+            <TableCell><ProductPicture {...props} onClick={onClickImage} /></TableCell>
             <TableCell><CellContents>{props.name} <SkuContainer>Sku:{props.sku}</SkuContainer></CellContents></TableCell>
             <TableCell><CellContents><ProductQuantity item={props} changeProductCount={changeProductCount} /></CellContents></TableCell>
             <TableCell><CellContents><ProductPrice item={props} /></CellContents></TableCell>
@@ -100,6 +122,8 @@ function productItem(props: Item, changeProductCount: ChangeProductCountType) {
 }
 
 export default function ReviewCart() {
+    const [modalItem, setModalItem] = useState<Item>();
+
     return (
         <CartContext.Consumer>
             {(cartContextValue: any) => {
@@ -115,8 +139,24 @@ export default function ReviewCart() {
                     setCart(cart.slice());
                 };
 
+                let currentModal = undefined;
+                if (modalItem) {
+                    const onCloseModal = () => {
+                        setModalItem(undefined);
+                    };
+
+                    currentModal = (
+                        <Modal onClose={onCloseModal}>
+                            <ProductModalPictureContainer>
+                                <ProductModalPicture {...modalItem} />
+                            </ProductModalPictureContainer>
+                        </Modal>
+                    );
+                }
+
                 return (
                     <PageContainer>
+                        {currentModal}
                         <Table>
                             <TableRow>
                                 <TableCell><TextLabelBold>Your Cart</TextLabelBold></TableCell>
@@ -124,7 +164,7 @@ export default function ReviewCart() {
                                 <TableCell><TextLabelGray> QUANTITY</TextLabelGray></TableCell>
                                 <TableCell><TextLabelGray> PRICE</TextLabelGray></TableCell>
                             </TableRow>
-                            {cart.map((item: Item) => productItem(item, changeProductCount))}
+                            {cart.map((item: Item) => productItem(item, changeProductCount, setModalItem))}
                         </Table>
                         <AlignRight>
                             <Link to="/check-out">
