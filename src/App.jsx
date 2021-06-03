@@ -75,11 +75,13 @@ export default function App() {
     setShippingAndBilling
   };
 
+
+
   return (
     <ShippingAndBillingContext.Provider value={shippingAndBillingContextValue}>
       <CartContext.Provider value={cartContextValue}>
-        <Router>
-          <div>
+        <div>
+          <Router>
             <NavBar>
               <Link style={{ 'text-decoration': 'none' }} to="/">
                 <NavTitle>Assemble Store</NavTitle>
@@ -97,9 +99,10 @@ export default function App() {
                 <ReviewCart />
               </Route>
             </Switch>
-          </div>
-        </Router>
+          </Router>
+        </div>
+
       </CartContext.Provider>
-    </ShippingAndBillingContext.Provider>
+    </ShippingAndBillingContext.Provider >
   );
 }

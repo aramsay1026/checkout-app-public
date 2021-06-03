@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from 'styled-components';
 import CartContext from '../providers/CartContext';
 import ShippingAndBillingContext, {
@@ -17,6 +17,7 @@ import {
 } from "react-router-dom";
 import { Button, PageContainer, AlignRight, Table, TableRow, TableCell, HeavyText, LightText } from '../styles/AppStyle';
 import { CartContextType } from "../providers/CartContext";
+import CheckBox from '../components/CheckBox';
 
 const MarginBuffer = styled.div`
     margin: 10px;
@@ -69,6 +70,7 @@ const ADDRESS_TYPE_PLACEHOLDER: AddressType = {
 };
 
 export default function OrderInfo() {
+    const [displayBillingForm, setDisplayBillingForm] = useState(false);
     return (
         <ShippingAndBillingContext.Consumer>
             {(shippingAndBillingContextValue: any) => {
@@ -137,8 +139,7 @@ export default function OrderInfo() {
                             <HeavyText>Shipping Address</HeavyText>
                             {renderAddressFields('shippingAddress')}
                             <FlexVerticalFlex>
-                                <Checkbox>
-                                </Checkbox>
+                                <CheckBox id="billingCheckBox" labelText="Same as Shipping?" />
                                 <LightText>Same as billing?</LightText>
                             </FlexVerticalFlex>
                             <HeavyText>Billing Address</HeavyText>

@@ -28,9 +28,7 @@ export default function Modal(props: ModalProps) {
     let modalClicked = false;
 
     function onPageOverlayClick() {
-        console.log('onPageOverlayClick')
         if (!modalClicked) {
-            console.log('onPageOverlayClick - !modalClicked')
             if (typeof props.onClose === 'function') {
                 props.onClose();
             }
@@ -39,7 +37,6 @@ export default function Modal(props: ModalProps) {
     }
 
     function onModalClick() {
-        console.log('onModalClick')
         modalClicked = true;
     }
     return (

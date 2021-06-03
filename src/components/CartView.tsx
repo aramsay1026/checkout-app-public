@@ -124,15 +124,15 @@ function productItem(props: Item, changeProductCount: ChangeProductCountType, on
 export default function ReviewCart() {
     const [modalItem, setModalItem] = useState<Item>();
 
+    const [cartModal, setCartModal] = useState();
+
     return (
         <CartContext.Consumer>
             {(cartContextValue: any) => {
                 const { cart, setCart } = cartContextValue;
                 const changeProductCount: ChangeProductCountType = (item: Item, newQuantity: number) => {
-                    if (newQuantity <= 0) {
-                        const itemIdx = cart.indexOf(item);
-                        cart.splice(itemIdx, 1);
-                        item.quantity = 0;
+                    if (newQuantity <= 1) {
+                        item.quantity = 1;
                     } else {
                         item.quantity = newQuantity;
                     }
